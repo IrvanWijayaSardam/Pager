@@ -1,6 +1,7 @@
 package com.aminivan.pager.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,13 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @Table(name = "tb_pager",schema = "public")
+@JsonIgnoreProperties({"user"})
 public class Pager implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pagerid",nullable = false,unique = true)
-    private int pagerId;
+    private int pagerid;
 
     @Column(name = "pagername")
     private String pagername;

@@ -35,7 +35,7 @@ public class PagerServiceImpl implements PagerService{
 
     @Override
     public Pager update(Pager updatedPager) {
-        var result = pagerRepository.findById(updatedPager.getPagerId());
+        var result = pagerRepository.findById(updatedPager.getPagerid());
 
         if(result.isEmpty()) throw new RuntimeException("Pager Data Not Found");
         var pager = result.get();

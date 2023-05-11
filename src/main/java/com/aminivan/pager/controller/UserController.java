@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") int id){
         var user = userService.findById(id);
-        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,user+ AuthKey.getKey());
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,user);
     }
 
     @PostMapping("/user")

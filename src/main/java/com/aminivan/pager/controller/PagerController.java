@@ -1,5 +1,6 @@
 package com.aminivan.pager.controller;
 
+import com.aminivan.pager.auth.AuthKey;
 import com.aminivan.pager.models.Pager;
 import com.aminivan.pager.service.PagerService;
 import com.aminivan.pager.utils.ResponseHandler;
@@ -20,6 +21,9 @@ public class PagerController {
     private static final String SUCCESS_RETRIEVE_MSG = "Successfully retrieved data!";
     private static final String SUCCESS_EDIT_MSG = "Successfully edit data!";
 
+    private static final String UNAUTHORIZED_MSG = "Unauthorized !";
+
+
     @Autowired
     public PagerController(PagerService pagerService) {
         this.pagerService = pagerService;
@@ -28,14 +32,24 @@ public class PagerController {
     @GetMapping("/pager")
     public ResponseEntity<Object> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestHeader(name = "Request-Id", required = false) String requestId
     ) {
+//        if(requestId == null){
+//            return ResponseHandler.generateResponse(UNAUTHORIZED_MSG, HttpStatus.OK,"Please check your request");
+//        }
+//
+//        if(!requestId.equals(AuthKey.getKey())){
+//            return ResponseHandler.generateResponse(UNAUTHORIZED_MSG, HttpStatus.OK,"Invalid Credentials");
+//        }
+
         Page<Pager> pagerList;
         Pageable pageable = PageRequest.of(page,size);
         pagerList = pagerService.findAll(pageable);
 
         return ResponseHandler.generatePagingResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,pagerList);
     }
+
 
     @GetMapping("/pager/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") int id){

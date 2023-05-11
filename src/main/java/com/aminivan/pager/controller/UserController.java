@@ -1,5 +1,6 @@
 package com.aminivan.pager.controller;
 
+import com.aminivan.pager.auth.AuthKey;
 import com.aminivan.pager.models.Pager;
 import com.aminivan.pager.models.User;
 import com.aminivan.pager.service.UserService;
@@ -38,7 +39,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") int id){
         var user = userService.findById(id);
-        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,user);
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,user+ AuthKey.getKey());
     }
 
     @PostMapping("/user")
@@ -58,4 +59,5 @@ public class UserController {
         userService.delete(id);
         return ResponseHandler.generateResponse(SUCCESS_EDIT_MSG, HttpStatus.OK, id);
     }
+
 }

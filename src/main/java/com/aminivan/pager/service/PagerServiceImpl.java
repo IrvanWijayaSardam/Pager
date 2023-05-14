@@ -4,7 +4,9 @@ import com.aminivan.pager.models.Pager;
 import com.aminivan.pager.repository.PagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,8 +16,13 @@ public class PagerServiceImpl implements PagerService{
     private final PagerRepository pagerRepository;
     @Autowired
     public PagerServiceImpl(PagerRepository pagerRepository) {this.pagerRepository = pagerRepository;}
+
     @Override
-    public Page<Pager> findAll(Pageable pageable) {return pagerRepository.findAll(pageable);}
+    public Page<Pager> findAll(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("xstatus").descending());
+        return pagerRepository.findAll(pageable);
+    }
+
 
     @Override
     public Pager findById(int id) {
